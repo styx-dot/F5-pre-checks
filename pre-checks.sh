@@ -44,7 +44,3 @@ echo "Logging into F5 BIG-IP and retrieving system information..."
 } > "$LOG_FILE"
 
 echo "Information gathered and saved to $LOG_FILE"
-
-
-
-
