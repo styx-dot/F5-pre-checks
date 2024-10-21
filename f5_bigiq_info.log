@@ -1,7 +1,0 @@
-=== Check image availability on BigIQ ===
-
-'test_image.iso': OK
-'test_hotfix.iso': ERROR
-
-------------------------------------------------------------------------------------
-
