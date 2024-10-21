@@ -1,0 +1,150 @@
+========== F5 BIG-IP Information ==========
+Date: Mon Oct 21 09:53:35 CEST 2024
+Host: 10.171.230.191
+
+=== Output of 'tmsh show sys version' ===
+
+Sys::Version
+Main Package
+  Product     BIG-IP
+  Version     17.1.1.4
+  Build       0.0.9
+  Edition     Point Release 4
+  Date        Mon Sep  2 14:15:17 PDT 2024
+
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh list sys provision' ===
+sys provision afm { }
+sys provision apm { }
+sys provision asm { }
+sys provision avr { }
+sys provision cgnat { }
+sys provision dos { }
+sys provision fps { }
+sys provision gtm { }
+sys provision ilx { }
+sys provision lc { }
+sys provision ltm {
+    level nominal
+}
+sys provision pem { }
+sys provision sslo { }
+sys provision swg { }
+sys provision urldb { }
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh show cm failover-status' ===
+
+-------------------------------------------
+CM::Failover Status
+-------------------------------------------
+Color    green
+Status   ACTIVE
+Summary  1/1 active
+Details
+         active for /Common/traffic-group-1
+
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh list cm device-group' ===
+cm device-group device_trust_group {
+    auto-sync enabled
+    devices {
+        script-bigip1.dhoey { }
+    }
+    network-failover disabled
+}
+cm device-group gtm {
+    devices {
+        script-bigip1.dhoey { }
+    }
+    network-failover disabled
+}
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh show cm sync-status' ===
+
+----------------------------------------------------------
+CM::Sync Status
+----------------------------------------------------------
+Color    green
+Status   Standalone
+Mode     standalone
+Summary   
+Details
+         Optional action: Add a device to the trust domain
+
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh show sys license | grep -E 'Service Check Date'' ===
+Service Check Date                     2024/10/17
+
+------------------------------------------------------------------------------------
+
+=== Output of 'ls -al /var/config/rest/iapps/' ===
+total 20
+drwxr-xr-x.  5 root      root      4096 Oct 21 00:30 .
+drwxr-xr-x. 13 root      root      4096 Oct 21 00:30 ..
+drwxr-xr-x.  7 restnoded restnoded 4096 Oct 21 00:29 f5-appsvcs
+drwxr-xr-x.  6 restnoded restnoded 4096 Oct 21 00:30 f5-service-discovery
+drwxr-xr-x.  2 root      root      4096 Oct 17 07:21 RPMS
+
+------------------------------------------------------------------------------------
+
+=== Output of 'ls -al /var/core' ===
+lrwxrwxrwx. 1 root root 14 Sep  2 15:24 /var/core -> ../shared/core
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh show /sys mcp' ===
+
+--------------------------------------------------------
+Sys::mcpd State:              
+--------------------------------------------------------
+Running Phase                   running
+Last Configuration Load Status  full-config-load-succeed
+End Platform ID Received        true
+
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh list /sys db systemauth.disablerootlogin value' ===
+sys db systemauth.disablerootlogin {
+    value "false"
+}
+
+------------------------------------------------------------------------------------
+
+=== Output of 'tmsh list sys icall script auto_backup' ===
+
+------------------------------------------------------------------------------------
+
+=== Output of 'df -h' ===
+Filesystem                             Size  Used Avail Use% Mounted on
+/dev/mapper/vg--db--vda-set.1.root     419M   76M  317M  20% /
+devtmpfs                               2.0G  4.0K  2.0G   1% /dev
+tmpfs                                  2.0G  3.3M  2.0G   1% /dev/shm
+tmpfs                                  2.0G  2.4M  2.0G   1% /run
+tmpfs                                  2.0G     0  2.0G   0% /sys/fs/cgroup
+/dev/mapper/vg--db--vda-set.1._usr     5.9G  5.2G  414M  93% /usr
+/dev/mapper/vg--db--vda-dat.share       15G   96M   14G   1% /shared
+none                                   2.0G   44M  1.9G   3% /shared/rrd.1.2
+/dev/mapper/vg--db--vda-set.1._var     4.4G  725M  3.4G  18% /var
+/dev/mapper/vg--db--vda-dat.appdata     25G  173M   24G   1% /appdata
+/dev/mapper/vg--db--vda-set.1._config  2.1G   15M  2.0G   1% /config
+none                                   2.0G   14M  2.0G   1% /var/tmstat
+prompt                                 4.0M   28K  4.0M   1% /var/prompt
+/dev/mapper/vg--db--vda-dat.log        2.9G   33M  2.7G   2% /var/log
+none                                   2.0G   12K  2.0G   1% /run/pamcache
+none                                   2.0G     0  2.0G   0% /var/loipc
+tmpfs                                  396M     0  396M   0% /run/user/0
+tmpfs                                  396M     0  396M   0% /run/user/91
+
+------------------------------------------------------------------------------------
+
