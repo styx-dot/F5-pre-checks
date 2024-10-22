@@ -1,3 +1,6 @@
+import argarse
+import 
+
 # Login Credentials
 F5_USER = "root"
 F5_PASS = "default"
@@ -20,6 +23,7 @@ COMMANDS = [
 
 # Function to log into the F5 and execute the commands
 def gather_f5_info(f5_host):
+
     LOG_FILE = "./logs/" + f5_host + "_f5_bigip_info.log"
 
     print("Logging into F5 BIG-IP at {} and retrieving system information...".format(f5_host))

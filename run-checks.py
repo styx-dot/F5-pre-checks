@@ -2,7 +2,7 @@ import sys
 import subprocess
 
 def run_command_with_ip(ip_address):
-    command = ['python2.7', '/shared/scripts/check.py', ip_address]  # This could be a list of command arguments
+    command = ['python2.7', './check.py', ip_address]  # This could be a list of command arguments
     try:
         output = subprocess.check_output(command, stderr=subprocess.STDOUT)
         print("Output for {}: \n{}".format(ip_address, output.decode('utf-8')))
