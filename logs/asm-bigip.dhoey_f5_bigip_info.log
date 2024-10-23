@@ -1,0 +1,100 @@
+
+========== F5 BIG-IP Information ==========
+Date: 2024-10-23 18:59:31.600540
+Host: 10.171.230.130 - [asm-bigip.dhoey]
+
+=== Output of 'show /sys version' ===
+Sys::Version
+Main Package
+  Product     BIG-IP
+  Version     17.1.1.4
+  Build       0.0.9
+  Edition     Point Release 4
+  Date        Mon Sep  2 14:15:17 PDT 2024
+--------------------------------------------------------------------------------
+
+=== Output of 'show /sys provision' ===
+---------------------------------------------------------
+Sys::Provision
+Module  CPU (%)  Memory (MB)  Host-Memory (MB)  Disk (MB)
+---------------------------------------------------------
+afm           0            0                 0          0
+apm           0            0                 0          0
+asm           1          870              1954       8050
+avr           0            0                 0          0
+cgnat         0            0                 0          0
+dos           0            0                 0          0
+fps           0            0                 0          0
+gtm           0            0                 0          0
+host         10         3578                 0      14992
+ilx           0            0                 0          0
+lc            0            0                 0          0
+ltm           1            0                 0          0
+pem           0            0                 0          0
+sslo          0            0                 0          0
+swg           0            0                 0          0
+tmos         88         3536               140          0
+urldb         0            0                 0          0
+--------------------------------------------------------------------------------
+
+=== Output of ASM REST CALL ===
+Internal_Parameter_Name                  | Value               
+------------------------------------------------------------
+max_login_request_body_buffer_size       | 10000               
+policy_history_max_total_size            | 0                   
+policy_history_min_retained_versions     | 2                   
+max_json_policy_size                     | 1000                
+cookie_httponly_attr                     | 0                   
+restart_upon_config_update_error         | 0                   
+single_page_application                  | 0                   
+max_raw_request_len                      | 5000                
+long_request_mem_percentage              | 10                  
+reporting_search_timeout                 | 60                  
+sa_login_expiration_timeout              | 1200                
+slow_transaction_timeout                 | 10                  
+max_slow_transactions                    | 25                  
+WhiteHatIP4                              | 67.207.113.224/28   
+WhiteHatIP3                              | 67.207.113.226/28   
+WhiteHatIP2                              | 209.11.127.0/28     
+WhiteHatIP1                              | 63.128.163.0/27     
+bypass_upon_asm_down                     | 0                   
+bypass_upon_load                         | 0                   
+icap_uri                                 | /reqmod             
+total_xml_memory                         | 0                   
+virus_header_name                        | X-Virus-Name,X-Infection-Found
+LogSignatures                            | 1                   
+MaximumCryptographicOperations           | 32                  
+PRXRateLimit                             | 200                 
+RWLightThreads                           | 0                   
+MaxViolationEntries                      | 500                 
+MaxSmtpSessions                          | 3000                
+MaxFtpSessions                           | 5000                
+ProtocolIndication                       | -1                  
+RWThreads                                | 0                   
+total_umu_max_size                       | 0                   
+ResponseBufferSize                       | 131072              
+allow_all_cookies_at_entry_point         | 0                   
+send_content_events                      | 0                   
+long_request_buffer_size                 | 10000000            
+request_buffer_size                      | 10000               
+ecard_regexp_decimal                     | ^\s*[+-]?\d*(\.\d+)?\s*$
+cookie_renewal_time_stamp                | 300                 
+cookie_expiration_time_out               | 600                 
+max_filtered_html_length                 | 52428800            
+ecard_regexp_phone                       | ^\s*[0-9 ()+-]+\s*$ 
+cookie_max_age                           | 0                   
+ecard_regexp_email                       | ^\s*([\w.-]+)@([\w.-]+)\s*$
+ecard_max_http_req_uri_len               | 2048                
+
+--------------------------------------------------------------------------------
+
+=== Output of TELEMETRY REST CALL ===
+{
+    "message": "success",
+    "declaration": {
+        "class": "Telemetry",
+        "schemaVersion": "1.36.0"
+    }
+}
+--------------------------------------------------------------------------------
+

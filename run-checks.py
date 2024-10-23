@@ -1,35 +1,30 @@
-import sys
 import subprocess
+import sys
+import os
 
-def run_command_with_ip(ip_address):
-    command = ['python2.7', './check.py', ip_address]  # This could be a list of command arguments
+def run_check(hostfile):
+    # Check if logs directory exists, if not create it
+    if not os.path.exists("logs"):
+        os.makedirs("logs")
+
+    # Read the hostfile and extract IP addresses
     try:
-        output = subprocess.check_output(command, stderr=subprocess.STDOUT)
-        print("Output for {}: \n{}".format(ip_address, output.decode('utf-8')))
-    except subprocess.CalledProcessError as e:
-        print("Error occurred while processing {}: {}".format(ip_address, e.output.decode('utf-8')))
-
-def process_ip_addresses(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            ip_addresses = file.readlines()
-
-            for ip in ip_addresses:
-                ip_address = ip.strip()  
-                if ip_address: 
-                    run_command_with_ip(ip_address)
-
+        with open(hostfile, 'r') as file:
+            hosts = [line.strip() for line in file if line.strip()]
     except IOError:
-        print("The file {} does not exist.".format(file_path))
-    except Exception as e:
-        print("An error occurred: {}".format(e))
-
-if __name__ == "__main__":
-
-    if len(sys.argv) != 2:
-        print("Usage: ./run-checks.py <hostfile>")
+        print("Error: Hostfile '{}' not found.".format(hostfile))
         sys.exit(1)
 
+    # Execute check.py for each host
+    for host in hosts:
+        print("")
+        # Call check.py and display its output
+        result = subprocess.call(['python2.7', 'check.py', host])
 
-    file_name = sys.argv[1]
-    process_ip_addresses(file_name)
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python2.7 run-check.py hostfile")
+        sys.exit(1)
+
+    hostfile = sys.argv[1]
+    run_check(hostfile)
