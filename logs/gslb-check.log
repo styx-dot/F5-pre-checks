@@ -1,0 +1,130 @@
+Host: precheck-bigip1 has IP: 10.91.172.161
+Host: precheck-bigip2 has IP: 10.91.172.162
+Running command for Host: precheck-bigip1 with IP: 10.91.172.161: show /gtm iquery 10.91.172.161
+
+
+GSLB: precheck-bigip3.dhoey
+
+iQuery output for Host: precheck-bigip1 with IP: 10.91.172.161 on GSLB precheck-bigip3.dhoey:
+-----------------------------------------------------
+Gtm::IQuery: 10.91.172.161     
+-----------------------------------------------------
+Server                           External_Server_GSLB
+Server Type                                     BIGIP
+Data Center                                       DC2
+Connection Time                     10/23/24 22:56:57
+State                                       connected
+Connection ID                                      67
+Reconnects                                          0
+Backlogs                                            0
+Bits In                                          5.6M
+Bits Out                                        59.6K
+Bytes Dropped                                      42
+Cert Expiration Date                10/21/34 11:48:13
+Configuration Time                               None
+Configuration Commit ID                             0
+Configuration Commit Originator                   ---
+Local TMOS version                             17.1.1
+Remote TMOS version                          17.1.1.4
+Local big3d version                                  
+Remote big3d version                   17.1.1.4.0.0.9
+Cipher Name                         AES256-GCM-SHA384
+Cipher Bits                                       256
+Cipher Protocol                               TLSv1.2
+
+
+
+GSLB: precheck-bigip4.dhoey
+
+iQuery output for Host: precheck-bigip1 with IP: 10.91.172.161 on GSLB precheck-bigip4.dhoey:
+-----------------------------------------------------
+Gtm::IQuery: 10.91.172.161     
+-----------------------------------------------------
+Server                           External_Server_GSLB
+Server Type                                     BIGIP
+Data Center                                       DC1
+Connection Time                     10/23/24 16:10:05
+State                                       connected
+Connection ID                                      56
+Reconnects                                         32
+Backlogs                                            0
+Bits In                                         22.0M
+Bits Out                                       280.9K
+Bytes Dropped                                    1.3K
+Cert Expiration Date                10/21/34 11:48:13
+Configuration Time                               None
+Configuration Commit ID                             0
+Configuration Commit Originator                   ---
+Local TMOS version                             17.1.1
+Remote TMOS version                          17.1.1.4
+Local big3d version                                  
+Remote big3d version                   17.1.1.4.0.0.9
+Cipher Name                         AES256-GCM-SHA384
+Cipher Bits                                       256
+Cipher Protocol                               TLSv1.2
+
+Running command for Host: precheck-bigip2 with IP: 10.91.172.162: show /gtm iquery 10.91.172.162
+
+
+GSLB: precheck-bigip3.dhoey
+
+iQuery output for Host: precheck-bigip2 with IP: 10.91.172.162 on GSLB precheck-bigip3.dhoey:
+-----------------------------------------------------
+Gtm::IQuery: 10.91.172.162     
+-----------------------------------------------------
+Server                           External_Server_GSLB
+Server Type                                     BIGIP
+Data Center                                       DC2
+Connection Time                     10/23/24 22:56:57
+State                                       connected
+Connection ID                                      73
+Reconnects                                          0
+Backlogs                                            0
+Bits In                                          5.7M
+Bits Out                                        59.7K
+Bytes Dropped                                      42
+Cert Expiration Date                10/21/34 02:39:23
+Configuration Time                               None
+Configuration Commit ID                             0
+Configuration Commit Originator                   ---
+Local TMOS version                             17.1.1
+Remote TMOS version                          17.1.1.4
+Local big3d version                                  
+Remote big3d version                   17.1.1.4.0.0.9
+Cipher Name                         AES256-GCM-SHA384
+Cipher Bits                                       256
+Cipher Protocol                               TLSv1.2
+
+
+
+GSLB: precheck-bigip4.dhoey
+
+iQuery output for Host: precheck-bigip2 with IP: 10.91.172.162 on GSLB precheck-bigip4.dhoey:
+-----------------------------------------------------
+Gtm::IQuery: 10.91.172.162     
+-----------------------------------------------------
+Server                           External_Server_GSLB
+Server Type                                     BIGIP
+Data Center                                       DC1
+Connection Time                     10/23/24 16:10:35
+State                                       connected
+Connection ID                                      59
+Reconnects                                         35
+Backlogs                                            0
+Bits In                                         22.0M
+Bits Out                                       280.7K
+Bytes Dropped                                    1.5K
+Cert Expiration Date                10/21/34 02:39:23
+Configuration Time                               None
+Configuration Commit ID                             0
+Configuration Commit Originator                   ---
+Local TMOS version                             17.1.1
+Remote TMOS version                          17.1.1.4
+Local big3d version                                  
+Remote big3d version                   17.1.1.4.0.0.9
+Cipher Name                         AES256-GCM-SHA384
+Cipher Bits                                       256
+Cipher Protocol                               TLSv1.2
+
+GSLB checks completed.
+

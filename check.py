@@ -11,10 +11,31 @@ F5_USER = "secops"
 F5_PASS = "lab"
 
 USER_COMMANDS = [
-    "show /sys version",
-    "show /sys provision"
+    #"list /sys db systemauth.disablerootlogin value",
+    #"bash -c 'ls -al /var/core'",
+    #"show /sys mcp",
+    #"show /sys service pccd",
+    #"show /sys service restjavad",
+    #"bash -c 'cat /config/bigip_base.conf | grep \"dslite\"'",
+    #"list cm device-group",
+    #"bash -c 'ls /var/config/rest/iapps'",
+    #"bash -c \"tmsh list sys application service | grep -B 5 'template'\"",
+    #"show sys software",
+    #"show /cm sync-status",
+    #"show /sys failover",
+    "show sys version",
+    #"show sys provision",
+    #"bash -c 'df -h'",
+    #"list sys icall script auto_backup",
+    #"bash -c \"tmsh list sys icall script auto_backup | grep 'filesize'\"",
+    #"list sys scriptd max-script-run-time",
+    #"bash -c 'tmsh show sys license | grep \"Service Check Date\"'",
+    #"bash -c \"tmsh show /sys mac-address | grep 'mgmt'\"",
+    #'bash -c "tmsh -q list sys management-ip | awk -F\'[ /]\' \'{print $3}\'"',
+    #"show /security protocol-inspection update ",
+    #"list security protocol-inspection profile { references { virtual-servers } }",
+    "list /sys dns"
 ]
-
 # Helper function for running commands via SSH
 def run_command(client, cmd):
     try:
@@ -23,7 +44,7 @@ def run_command(client, cmd):
         error = stderr.read().decode('utf-8').strip()
         return output, error
     except Exception as e:
-        return None, f"Error executing command '{cmd}': {e}"
+        return None, "Error executing command '{}': {}".format(cmd, e)
 
 # Pre-check for hostname, ASM, and Telemetry status
 def pre_check(client):
@@ -33,72 +54,84 @@ def pre_check(client):
 
     asm_enabled = bool(asm)
     telemetry_enabled = bool(telemetry)
-    hostname = hostname.split('.')[0]
-    print(hostname)
+
     return hostname, asm_enabled, telemetry_enabled
 
 # General function to make REST API calls
 def make_api_call(url, user, psw):
     auth = (user, psw)
     headers = {'Content-Type': 'application/json'}
-    
+
     try:
-        # Disable InsecureRequestWarning for unverified HTTPS requests
-        requests.urllib3.disable_warnings(requests.urllib3.exceptions.InsecureRequestWarning)
+        requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
         response = requests.get(url, headers=headers, auth=auth, verify=False)
-        
+
         if response.status_code == 200:
             return response.json()
         else:
-            print(f"Error: Received status code {response.status_code} for URL: {url}")
+            print("Error: Received status code {} for URL: {}".format(response.status_code, url))
             return None
     except Exception as e:
-        print(f"Error making API call to {url}: {e}")
+        print("Error making API call to {}: {}".format(url, e))
         return None
 
 # Check ASM details
 def asm_check(f5_host, user, psw):
-    url = f'https://{f5_host}/mgmt/tm/asm/advanced-settings?$select=name,value'
+    url = 'https://[{}]/mgmt/tm/asm/advanced-settings?$select=name,value'.format(f5_host)
     return make_api_call(url, user, psw)
 
 # Check Telemetry details
 def telemetry_check(f5_host, user, psw):
-    url = f'https://{f5_host}/mgmt/shared/telemetry/declare'
+    url = 'https://[{}]/mgmt/shared/telemetry/declare'.format(f5_host)
     return make_api_call(url, user, psw)
+
+def write_hostname_file(hostname):
+        gslb_file = 'gslb_hostnames'
+
+        if not os.path.exists(gslb_file):
+             with open(gslb_file, 'w') as file:
+                  file.write(hostname.split('.')[0] + '\n')
+        else:
+             with open(gslb_file, 'a') as file:
+                  file.write(hostname.split('.')[0] + '\n')
+
 
 # Main function to gather F5 information
 def gather_f5_info(f5_host):
     log_dir = "./logs"
-    os.makedirs(log_dir, exist_ok=True)
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
 
     # Create SSH client
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+# Write hostname to gslb_hostnames file for later use.
     try:
         client.connect(f5_host, username=F5_USER, password=F5_PASS)
-        print("Connected to F5 BIG-IP")
 
         hostname, asm_enabled, telemetry_enabled = pre_check(client)
-        print(hostname)
+        write_hostname_file(hostname)
+
+        print("Connected to {}").format(hostname)
         # Create logfile
-        log_file_path = os.path.join(log_dir, f"{hostname}_f5_bigip_info.log")
+        log_file_path = os.path.join(log_dir, "{}_f5_bigip_info.log".format(hostname))
         with open(log_file_path, "w") as log_file:
-            log_file.write(f"\n========== F5 BIG-IP Information ==========\n")
-            log_file.write(f"Date: {datetime.datetime.now()}\n")
-            log_file.write(f"Host: {f5_host} - [{hostname}]\n\n")
-    
+            log_file.write("\n========== F5 BIG-IP Information ==========\n")
+            log_file.write("Date: {}\n".format(datetime.datetime.now()))
+            log_file.write("Host: {} - [{}]\n\n".format(f5_host, hostname))
+
             # Run user commands and log output
             total_commands = len(USER_COMMANDS)
             for index, cmd in enumerate(USER_COMMANDS):
                 output, error = run_command(client, cmd)
-                log_file.write(f"=== Output of '{cmd}' ===\n")
+                log_file.write("=== Output of '{}' ===\n".format(cmd))
                 log_file.write(output if output else error)
                 log_file.write("\n" + "-" * 80 + "\n\n")
 
                 # Display progress
-                progress = int((index + 1) / total_commands * 100)
-                sys.stdout.write(f"\rProgress: [{'#' * (progress // 2)}] {progress}%")
+                progress = int((index + 1) / float(total_commands) * 100)
+                sys.stdout.write("\rProgress: [{}] {}%".format('#' * (progress // 2), progress))
                 sys.stdout.flush()
 
             # ASM check if enabled
@@ -107,12 +140,12 @@ def gather_f5_info(f5_host):
                 asm_data = asm_check(f5_host, F5_USER, F5_PASS)
                 if asm_data:
                     items = asm_data.get('items', [])
-                    log_file.write(f"{'Internal_Parameter_Name':<40} | {'Value':<20}\n")
+                    log_file.write("{:<40} | {:<20}\n".format("Internal_Parameter_Name", "Value"))
                     log_file.write("-" * 60 + "\n")
                     for item in items:
                         name = item.get('name', 'N/A')
                         value = item.get('value', 'N/A')
-                        log_file.write(f"{name:<40} | {value:<20}\n")
+                        log_file.write("{:<40} | {:<20}\n".format(name, value))
                 log_file.write("\n" + "-" * 80 + "\n\n")
 
             # Telemetry check if enabled
@@ -123,11 +156,11 @@ def gather_f5_info(f5_host):
                     log_file.write(json.dumps(telemetry_data, indent=4))
                 log_file.write("\n" + "-" * 80 + "\n\n")
 
-        print(f"\nInformation gathered and saved to {log_file_path}")
+        
 
     except Exception as e:
-        print(f"Error connecting to F5 BIG-IP: {e}")
-    
+        print("Error connecting to F5 BIG-IP: {}".format(e))
+
     finally:
         client.close()
 
@@ -143,3 +176,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

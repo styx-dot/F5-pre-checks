@@ -1,0 +1,25 @@
+
+========== F5 BIG-IP Information ==========
+Date: 2024-10-24 18:27:36.799734
+Host: 10.171.230.133 - [precheck-bigip2.dhoey]
+
+=== Output of 'show sys version' ===
+Sys::Version
+Main Package
+  Product     BIG-IP
+  Version     17.1.1.4
+  Build       0.0.9
+  Edition     Point Release 4
+  Date        Mon Sep  2 14:15:17 PDT 2024
+--------------------------------------------------------------------------------
+
+=== Output of 'list /sys dns' ===
+sys dns {
+    name-servers { 10.170.1.224 10.170.1.225 }
+}
+--------------------------------------------------------------------------------
+
+=== Output of ASM REST CALL ===
+
+--------------------------------------------------------------------------------
+
